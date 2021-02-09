@@ -1,14 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, axios} from 'react'
 import VideoList from './components/VideoList'
+import apiCall from './api/youtube'
 
 function App() {
+  const [query, setQuery] = useState("");
+  const [videoList, setVideoList] = useState(null);
+
+  useEffect(() => {
+    setVideoList(apiCall);
+  }, [query])
 
   return (
     <VideoList/>
   );
 }
 
-ReactDOM.render(
-    <App />,
-  document.getElementById('root')
-);
+export default App;
