@@ -1,17 +1,23 @@
 import React, {useEffect, useState, axios} from 'react'
 import VideoList from './components/VideoList'
-import apiCall from './api/youtube'
+import api from './api/youtube'
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("cat");
   const [videoList, setVideoList] = useState(null);
 
-  useEffect(() => {
-    setVideoList(apiCall);
+  useEffect(async () => {
+      await api.get('/search', {
+        params: {
+          q: query
+        }
+      }).then((response) => {
+        setVideoList(response);
+      });
   }, [query])
 
   return (
-    <VideoList/>
+    <VideoList videos={videoList}/>
   );
 }
 
